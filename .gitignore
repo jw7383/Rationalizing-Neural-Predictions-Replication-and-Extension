@@ -1,0 +1,5 @@
+*.gz
+*.pyc
+*.txt
+*.gen
+*.pt
