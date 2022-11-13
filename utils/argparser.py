@@ -10,7 +10,7 @@ def parse_args():
     parser.add_argument('--num_gpus', type=int, default=1, help='Num GPUs to use. More than one gpu turns on multi_gpu training with nn.DataParallel.')
     parser.add_argument('--debug_mode', action='store_true', default=False, help='debug mode' )
     # learning
-    parser.add_argument('--objective', default='cross_entropy', help='choose which loss function to use')
+    parser.add_argument('--objective', default='cross_entropy', help='choose which loss function to use (cross_entropy/mse')
     parser.add_argument('--aspect', default='appearance', help='which aspect to train/eval on')
     parser.add_argument('--init_lr', type=float, default=0.001, help='initial learning rate [default: 0.001]')
     parser.add_argument('--epochs', type=int, default=256, help='number of epochs for train [default: 256]')
@@ -39,8 +39,8 @@ def parse_args():
     parser.add_argument('--gumbel_decay', type=float, default=1e-5, help="Start temperature for gumbel softmax. This is annealed via linear decay")
     # rationale
     parser.add_argument('--get_rationales',  action='store_true', default=False, help="output attributions for dataset. Note, will only be stored for test set in results file, as indicated by results_path")
-    parser.add_argument('--selection_lambda', type=float, default=.01, help="y1 in Gen cost L + y1||z|| + y2|zt - zt-1| + y3|{z}|")
-    parser.add_argument('--continuity_lambda', type=float, default=.01, help="y2 in Gen cost L + y1||z|| + y2|zt - zt-1|+ y3|{z}|")
+    parser.add_argument('--selection_lambda', type=float, default=.0003, help="y1 in Gen cost L + y1||z|| + y2|zt - zt-1| + y3|{z}|")
+    parser.add_argument('--continuity_lambda', type=float, default=.0006, help="y2 in Gen cost L + y1||z|| + y2|zt - zt-1|+ y3|{z}|")
     parser.add_argument('--num_class', type=int, default=2, help="num classes")
 
     args = parser.parse_args()

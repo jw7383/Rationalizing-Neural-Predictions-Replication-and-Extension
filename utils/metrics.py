@@ -27,7 +27,7 @@ def collate_epoch_stat(stat_dict, epoch_details, mode, args):
 def get_metrics(preds, golds, args):
     metrics = {}
 
-    if args.objective  in ['cross_entropy', 'margin']:
+    if args.objective =='cross_entropy':
         metrics['accuracy'] = sklearn.metrics.accuracy_score(y_true=golds, y_pred=preds)
         metrics['confusion_matrix'] = sklearn.metrics.confusion_matrix(y_true=golds,y_pred=preds)
         metrics['precision'] = sklearn.metrics.precision_score(y_true=golds, y_pred=preds, average="weighted")

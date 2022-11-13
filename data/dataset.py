@@ -39,7 +39,7 @@ def process_file(args, token2id, dataset):
 ## Convert one line from beer dataset to {Text, Tensor, Labels}
 def process_line(args, token2id, line, aspect_id, id):
     max_length = 250
-    class_map = {0: 0, 1:0, 2:0, 3:0, 4:1, 5:1, 6:1, 7:1, 8:2, 9:2, 10:2}
+    class_map = {0: 0, 1:0, 2:0, 3:0, 4:1, 5:1, 6:1, 7:1, 8:2, 9:2, 10:2} #for cross_entropy only
     if isinstance(line, bytes):
         line = line.decode()
     labels = [ float(v) for v in line.split()[:5] ]
