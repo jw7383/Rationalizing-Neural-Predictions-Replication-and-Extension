@@ -27,10 +27,8 @@ if __name__ == '__main__':
         args.epoch_stats = epoch_stats
         print("Save train/dev results to", save_path)
         args_dict = vars(args)
-        pickle.dump(args_dict, open(save_path,'wb') )
+        pickle.dump(args_dict, open(os.path.join(save_path, 'args_dict.pkl'),'wb') )
 
-
-    # test
     if args.test :
         test_stats = train.test_model(test_data, model, gen, args)
         args.test_stats = test_stats
@@ -39,4 +37,4 @@ if __name__ == '__main__':
 
         print("Save test results to", save_path)
         args_dict = vars(args)
-        pickle.dump(args_dict, open(save_path,'wb') )
+        pickle.dump(args_dict, open(os.path.join(save_path, 'args_dict.pkl'),'wb') )

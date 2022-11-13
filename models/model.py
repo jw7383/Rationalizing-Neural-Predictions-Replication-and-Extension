@@ -14,7 +14,7 @@ def get_model(args, embeddings):
             gen_path = learn.get_gen_path(args.snapshot)
             if os.path.exists(gen_path):
                 gen = torch.load(gen_path)
-            model = torch.load(args.snapshot)
+            model = torch.load(learn.get_model_path(args.snapshot))
         except :
             print("Sorry, This snapshot doesn't exist."); exit()
 

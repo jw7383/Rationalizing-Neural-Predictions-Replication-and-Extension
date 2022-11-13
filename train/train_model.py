@@ -63,8 +63,6 @@ def train_model(train_data, dev_data, model, gen, args):
         best_func = min if args.tuning_metric == 'loss' else max
         if best_func(epoch_stats[tuning_key]) == epoch_stats[tuning_key][-1]:
             num_epoch_sans_improvement = 0
-            if not os.path.isdir(args.save_dir):
-                os.makedirs(args.save_dir)
             # Subtract one because epoch is 1-indexed and arr is 0-indexed
             epoch_stats['best_epoch'] = epoch - 1
             torch.save(model, learn.get_model_path(args.model_path))
