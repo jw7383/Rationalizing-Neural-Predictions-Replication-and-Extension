@@ -243,7 +243,7 @@ def get_loss(logit,y, args):
     if args.objective == 'cross_entropy':
         loss = F.cross_entropy(logit, y)
     elif args.objective == 'mse':
-        loss = F.mse_loss(logit, y.float())
+        loss = F.mse_loss(torch.squeeze(logit), y.float())
     else:
         raise Exception(
             "Objective {} not supported!".format(args.objective))

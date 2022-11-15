@@ -8,7 +8,7 @@ def get_embedding_tensor(args):
     elif args.embedding == 'glove':
         embedding_path='raw_data/movie_reviews/embeddings/glove.6B/glove.6B.300d.txt'
     lines = []
-    with gzip.open(embedding_path) as file:
+    with gzip.open(embedding_path, mode = 'rt') as file:
         lines = file.readlines()
         file.close()
     embedding_tensor = []
@@ -32,10 +32,9 @@ def get_indices_tensor(text_list, token2id, max_length):
     returns tensor of same size as text with each word's corresponding index
     '''
     UNK_ID = 0
-    PAD_ID = 1
     text_id = [ token2id[word] if word in token2id else UNK_ID for word in text_list][:max_length]
     if len(text_id) < max_length:
-        text_id.extend( [PAD_ID for _ in range(max_length - len(text_id))])
+        text_id.extend( [UNK_ID for _ in range(max_length - len(text_id))])
 
     x =  torch.LongTensor([text_id])
 

@@ -11,7 +11,7 @@ To run the model, first you need to obtain the Beer Advocate review data by goin
 
 Then run the model using an example command like so:
 ```
-python -m main --train --test --get_rationales --epochs 10 --cuda --num_workers 1
+python -m main --train --test --get_rationales --aspect appearance --epochs 1 --cuda --num_workers 1 --debug_mode
 ```
 
 Use `--get_rationales` to enable extractive rationales.

@@ -10,7 +10,7 @@ def parse_args():
     parser.add_argument('--num_gpus', type=int, default=1, help='Num GPUs to use. More than one gpu turns on multi_gpu training with nn.DataParallel.')
     parser.add_argument('--debug_mode', action='store_true', default=False, help='debug mode' )
     # learning
-    parser.add_argument('--objective', default='cross_entropy', help='choose which loss function to use (cross_entropy/mse')
+    parser.add_argument('--objective', default='mse', help='choose which loss function to use (cross_entropy/mse')
     parser.add_argument('--aspect', default='appearance', help='which aspect to train/eval on')
     parser.add_argument('--init_lr', type=float, default=0.001, help='initial learning rate [default: 0.001]')
     parser.add_argument('--epochs', type=int, default=256, help='number of epochs for train [default: 256]')
