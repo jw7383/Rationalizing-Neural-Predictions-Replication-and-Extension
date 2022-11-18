@@ -3,6 +3,8 @@
 
 This repo replicates the Beer Advocate experiment as described in this [paper](https://people.csail.mit.edu/taolei/papers/emnlp16_rationale.pdf).
 
+Acknowledgements for this code include the original paper's [source code](https://github.com/taolei87/rcnn/tree/master/code/rationale) and Adam Yala's PyTorch [implemention](https://github.com/yala/text_nn).
+
 To run the model, first you need to obtain the Beer Advocate review data by going [here](http://people.csail.mit.edu/taolei/beer/).
 
 1. Download the data, which are the files `reviews.aspect{#}.{dataset}.txt.gz`, to `"raw_data/beer_advocate/data"`.
