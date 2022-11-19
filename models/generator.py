@@ -33,7 +33,7 @@ class Generator(nn.Module):
             Returns prob of each token being selected
         '''
         activ = activ.transpose(1,2)
-        logits = self.hidden(activ)
+        logits = F.log_softmax(self.hidden(activ))
         probs = learn.gumbel_softmax(logits, self.args.gumbel_temprature, self.args.cuda)
         z = probs[:,:,1]
         return z

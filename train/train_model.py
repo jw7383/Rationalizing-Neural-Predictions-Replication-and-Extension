@@ -177,8 +177,7 @@ def run_epoch(data_loader, train_model, model, gen, optimizer, step, args):
 
         x_indx = learn.get_x_indx(batch, args, eval_model)
         text = batch['text']
-        with torch.no_grad():
-            y = autograd.Variable(batch['y'])
+        y = autograd.Variable(batch['y'])
 
         if args.cuda:
             x_indx, y = x_indx.cuda(), y.cuda()

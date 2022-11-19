@@ -67,7 +67,7 @@ def get_hard_mask(z, return_ind=False):
     if return_ind:
         del z
         return ind
-    masked = torch.ge(z, max_z.unsqueeze(-1)).float()
+    masked = torch.ge(z, 0.5).float()
     del z
     return masked
 
