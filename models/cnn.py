@@ -33,7 +33,7 @@ class CNN(nn.Module):
                 left_pad = conv.kernel_size[0] - 1
                 pad_tensor_size = [d for d in layer_activ.size()]
                 pad_tensor_size[2] = left_pad
-                left_pad_tensor =autograd.Variable( torch.zeros( pad_tensor_size ) )
+                left_pad_tensor = torch.zeros( pad_tensor_size )
                 if self.args.cuda:
                     left_pad_tensor = left_pad_tensor.cuda()
                 padded_activ = torch.cat( (left_pad_tensor, layer_activ), dim=2)

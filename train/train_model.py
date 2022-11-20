@@ -177,7 +177,7 @@ def run_epoch(data_loader, train_model, model, gen, optimizer, step, args):
 
         x_indx = learn.get_x_indx(batch, args, eval_model)
         text = batch['text']
-        y = autograd.Variable(batch['y'])
+        y = batch['y']
 
         if args.cuda:
             x_indx, y = x_indx.cuda(), y.cuda()
@@ -218,8 +218,6 @@ def run_epoch(data_loader, train_model, model, gen, optimizer, step, args):
         rationales.extend(learn.get_rationales(mask, text))
 
         golds.extend(batch['y'].numpy())
-
-
 
     epoch_metrics = metrics.get_metrics(preds, golds, args)
 
