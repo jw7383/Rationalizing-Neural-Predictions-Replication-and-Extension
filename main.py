@@ -16,8 +16,6 @@ if __name__ == '__main__':
 
     rationale_data = dataset_factory.get_rationale(args, token2id)
 
-    print(rationale_data[0:1])
-
     gen, model = model_factory.get_model(args, embeddings)
 
     save_path = args.results_path
