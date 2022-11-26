@@ -1,8 +1,8 @@
 import os
 import sys
 import torch
-import torch.autograd as autograd
 import torch.nn.functional as F
+import torch.autograd as autograd
 import utils.metrics as metrics
 import tqdm
 import numpy as np
@@ -177,7 +177,12 @@ def run_epoch(data_loader, train_model, model, gen, optimizer, step, args):
 
         x_indx = learn.get_x_indx(batch, args, eval_model)
         text = batch['text']
-        y = batch['y']
+        if eval_model:
+            with torch.no_grad():
+                y = autograd.Variable(batch['y'])
+        else:
+            y = autograd.Variable(batch['y'])
+
 
         if args.cuda:
             x_indx, y = x_indx.cuda(), y.cuda()
@@ -211,8 +216,12 @@ def run_epoch(data_loader, train_model, model, gen, optimizer, step, args):
 
         obj_losses.append(obj_loss.item())
         losses.append( loss.item())
-        batch_softmax = F.softmax(logit, dim=-1).cpu()
-        preds.extend(torch.max(batch_softmax, 1)[1].view(y.size()).data.numpy())
+        if args.objective == 'cross_entropy':
+            batch_softmax = F.softmax(logit, dim=-1).cpu()
+            preds.extend(torch.max(batch_softmax, 1)[1].view(y.size()).data.numpy())
+        elif args.objective == "mse":
+            batch_sigmoid = torch.sigmoid(logit).cpu()
+            preds.extend(batch_sigmoid.view(y.size()).detach().numpy())
 
         texts.extend(text)
         rationales.extend(learn.get_rationales(mask, text))
@@ -232,6 +241,9 @@ def run_epoch(data_loader, train_model, model, gen, optimizer, step, args):
     if args.get_rationales:
         epoch_stat['k_selection_loss'] = np.mean(k_selection_losses)
         epoch_stat['k_continuity_loss'] = np.mean(k_continuity_losses)
+
+        print("preds: ", preds)
+        print("golds:", golds)
 
     return epoch_stat, step, losses, preds, golds, rationales
 

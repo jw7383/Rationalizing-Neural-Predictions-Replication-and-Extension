@@ -31,12 +31,10 @@ def get_indices_tensor(text_list, token2id, max_length):
     -max length of return tokens
     returns tensor of same size as text with each word's corresponding index
     '''
-    UNK_ID = 0
-    PAD_ID = 1
-    
+    UNK_ID = 0    
     text_id = [ token2id[word] if word in token2id else UNK_ID for word in text_list][:max_length]
     if len(text_id) < max_length:
-        text_id.extend( [ PAD_ID for _ in range(max_length - len(text_id))])
+        text_id.extend( [ UNK_ID for _ in range(max_length - len(text_id))])
 
     x =  torch.LongTensor([text_id])
 

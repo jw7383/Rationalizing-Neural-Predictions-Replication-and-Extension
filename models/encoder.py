@@ -18,7 +18,7 @@ class Encoder(nn.Module):
         self.embedding_bn = nn.BatchNorm1d( hidden_dim)
 
         if args.model_form == 'cnn':
-            self.cnn = cnn.CNN(args)
+            self.cnn = cnn.CNN(args, max_pool_over_time = True)
             self.fc = nn.Linear( len(args.filters)*args.filter_num,  args.hidden_dim)
         else:
             raise NotImplementedError("Model form {} not yet supported for encoder!".format(args.model_form))
@@ -40,7 +40,7 @@ class Encoder(nn.Module):
         x = self.dropout(x)
 
         if self.args.model_form == 'cnn':
-            x = torch.transpose(x, 1, 2) # Switch X to (Batch, Embed, Length)
+            x = torch.transpose(x, 1, 2)
             hidden = self.cnn(x)
             hidden = F.relu( self.fc(hidden) )
         else:

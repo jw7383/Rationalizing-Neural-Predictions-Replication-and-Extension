@@ -1,11 +1,10 @@
 import torch
 import torch.nn as nn
-import torch.autograd as autograd
 import torch.nn.functional as F
 
 class CNN(nn.Module):
 
-    def __init__(self, args, max_pool_over_time=True):
+    def __init__(self, args, max_pool_over_time=False):
         super(CNN, self).__init__()
 
         self.args = args
@@ -33,7 +32,7 @@ class CNN(nn.Module):
                 left_pad = conv.kernel_size[0] - 1
                 pad_tensor_size = [d for d in layer_activ.size()]
                 pad_tensor_size[2] = left_pad
-                left_pad_tensor = torch.zeros( pad_tensor_size )
+                left_pad_tensor = torch.zeros( pad_tensor_size, requires_grad=True)
                 if self.args.cuda:
                     left_pad_tensor = left_pad_tensor.cuda()
                 padded_activ = torch.cat( (left_pad_tensor, layer_activ), dim=2)
