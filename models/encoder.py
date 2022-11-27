@@ -10,8 +10,7 @@ class Encoder(nn.Module):
         ### Encoder
         self.args = args
         vocab_size, hidden_dim = embeddings.shape
-        self.embedding_dim = hidden_dim
-        self.embedding_layer = nn.Embedding(vocab_size, hidden_dim)
+        self.embedding_layer = nn.Embedding(vocab_size, hidden_dim, padding_idx = 1)
         self.embedding_layer.weight.data = torch.from_numpy( embeddings )
         self.embedding_layer.weight.requires_grad = True
         self.embedding_fc = nn.Linear( hidden_dim, hidden_dim )

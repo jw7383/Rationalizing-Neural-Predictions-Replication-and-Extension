@@ -27,7 +27,7 @@ if __name__ == '__main__':
         args.epoch_stats = epoch_stats
         print("Save train/dev results to", save_path)
         args_dict = vars(args)
-        pickle.dump(args_dict, open(os.path.join(save_path, 'train_args_dict.pkl'),'wb') )
+        pickle.dump(args_dict, open(os.path.join(save_path, f'{args.dataset}_train_args_dict.pkl'),'wb') )
 
     if args.test :
         test_stats = train.test_model(test_data, model, gen, args)
@@ -36,7 +36,7 @@ if __name__ == '__main__':
         args.test_data = test_data
         print("Save test results to", save_path)
         args_dict = vars(args)
-        pickle.dump(args_dict, open(os.path.join(save_path, 'test_args_dict.pkl'),'wb') )
+        pickle.dump(args_dict, open(os.path.join(save_path, f'{args.dataset}_test_args_dict.pkl'),'wb') )
 
     if args.get_rationales:
         rationale_stats = train.test_model(rationale_data, model, gen, args)
@@ -46,4 +46,4 @@ if __name__ == '__main__':
 
         print("Save rationale results to", save_path)
         args_dict = vars(args)
-        pickle.dump(args_dict, open(os.path.join(save_path, 'rationale_args_dict.pkl'),'wb') )
+        pickle.dump(args_dict, open(os.path.join(save_path, f'{args.dataset}_rationale_args_dict.pkl'),'wb') )
