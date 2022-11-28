@@ -1,7 +1,6 @@
 import gzip
 import tqdm
 import json
-import string
 import re
 import pandas as pd
 from utils.embedding import get_indices_tensor
