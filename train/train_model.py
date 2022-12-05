@@ -220,7 +220,7 @@ def run_epoch(data_loader, train_model, model, gen, optimizer, step, args):
             batch_softmax = F.softmax(logit, dim=-1).cpu()
             preds.extend(torch.max(batch_softmax, 1)[1].view(y.size()).data.numpy())
         elif args.objective == "mse":
-            batch_sigmoid = torch.sigmoid(logit).cpu()
+            batch_sigmoid = logit.cpu()
             preds.extend(batch_sigmoid.view(y.size()).detach().numpy())
 
         texts.extend(text)
@@ -242,8 +242,8 @@ def run_epoch(data_loader, train_model, model, gen, optimizer, step, args):
         epoch_stat['k_selection_loss'] = np.mean(k_selection_losses)
         epoch_stat['k_continuity_loss'] = np.mean(k_continuity_losses)
 
-        print("preds: ", preds)
-        print("golds:", golds)
+        print("preds: ", preds[0:30])
+        print("golds:", golds[0:30])
 
     return epoch_stat, step, losses, preds, golds, rationales
 
