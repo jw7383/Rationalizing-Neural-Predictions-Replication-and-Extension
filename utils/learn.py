@@ -1,6 +1,6 @@
 import torch
-import torch.nn.functional as F
 import torch.autograd as autograd
+import torch.nn.functional as F
 import numpy as np
 import torch.utils.data as data
 
@@ -50,11 +50,8 @@ def get_optimizer(models, args):
 
 
 def get_x_indx(batch, args, eval_model):
-    if eval_model:
-        with torch.no_grad():
-            x_indx = autograd.Variable(batch['x'])
-    else:
-        x_indx = autograd.Variable(batch['x'])
+    with torch.no_grad():
+        x_indx = (batch['x'])
     return x_indx
 
 
@@ -98,7 +95,7 @@ def gumbel_softmax(input, temperature, cuda):
     noise = torch.rand(input.size())
     noise.add_(1e-9).log_().neg_()
     noise.add_(1e-9).log_().neg_()
-    noise.requires_grad_()
+    noise = noise
     if cuda:
         noise = noise.cuda()
     x = (input + noise) / temperature

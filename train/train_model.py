@@ -1,8 +1,8 @@
 import os
 import sys
 import torch
-import torch.nn.functional as F
 import torch.autograd as autograd
+import torch.nn.functional as F
 import utils.metrics as metrics
 import tqdm
 import numpy as np
@@ -35,7 +35,7 @@ def train_model(train_data, dev_data, model, gen, args):
     dev_loader = learn.get_dev_loader(dev_data, args)
 
 
-
+    losses_list = []
 
     for epoch in range(1, args.epochs + 1):
 
@@ -44,7 +44,7 @@ def train_model(train_data, dev_data, model, gen, args):
             train_model = mode == 'Train'
             print('{}'.format(mode))
             key_prefix = mode.lower()
-            epoch_details, step, _, _, _, _ = run_epoch(
+            epoch_details, step, losses, _, _, _ = run_epoch(
                 data_loader=loader,
                 train_model=train_model,
                 model=model,
@@ -52,6 +52,8 @@ def train_model(train_data, dev_data, model, gen, args):
                 optimizer=optimizer,
                 step=step,
                 args=args)
+
+            losses_list.append(losses)
 
             epoch_stats, log_statement = metrics.collate_epoch_stat(epoch_stats, epoch_details, key_prefix, args)
 
@@ -96,6 +98,8 @@ def train_model(train_data, dev_data, model, gen, args):
         model = torch.load(learn.get_model_path(args.model_path))
         gen.cpu()
         gen = torch.load(learn.get_gen_path(args.model_path))
+
+    print(losses_list)
 
     return epoch_stats, model, gen
 
@@ -177,12 +181,7 @@ def run_epoch(data_loader, train_model, model, gen, optimizer, step, args):
 
         x_indx = learn.get_x_indx(batch, args, eval_model)
         text = batch['text']
-        if eval_model:
-            with torch.no_grad():
-                y = autograd.Variable(batch['y'])
-        else:
-            y = autograd.Variable(batch['y'])
-
+        y = batch['y']
 
         if args.cuda:
             x_indx, y = x_indx.cuda(), y.cuda()
@@ -241,9 +240,6 @@ def run_epoch(data_loader, train_model, model, gen, optimizer, step, args):
     if args.get_rationales:
         epoch_stat['k_selection_loss'] = np.mean(k_selection_losses)
         epoch_stat['k_continuity_loss'] = np.mean(k_continuity_losses)
-
-        print("preds: ", preds[0:30])
-        print("golds:", golds[0:30])
 
     return epoch_stat, step, losses, preds, golds, rationales
 
