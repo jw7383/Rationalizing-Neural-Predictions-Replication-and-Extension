@@ -1,5 +1,8 @@
 # Rationalizing Neural Predictions Replication and Extension
-## DS-GA 1011 Natural Language Processing Final Project
+
+This is the GitHub repository is for the Course Project of DS-GA 1011 Natural Language Processing Final Project (2022) at New York University. Topics include: NLP, Sentiment Prediction, and Rationale Analysis, and Interpretability
+
+Authors: Jason Wang, Xu Han, and Chloe Zheng
 
 This repo replicates the Beer Advocate experiment as described in this [paper](https://people.csail.mit.edu/taolei/papers/emnlp16_rationale.pdf).
 
